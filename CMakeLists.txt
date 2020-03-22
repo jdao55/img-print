@@ -45,7 +45,7 @@ endif()
 set(CONAN_EXTRA_REQUIRES "")
 set(CONAN_EXTRA_OPTIONS "")
 
-set(CONAN_EXTRA_REQUIRES  ${CONAN_EXTRA_REQUIRES}  cpp-taskflow/2.2.0)
+set(CONAN_EXTRA_REQUIRES  ${CONAN_EXTRA_REQUIRES}  imagemagick/7.0.8-44@bincrafters/stable)
 if(CPP_STARTER_USE_IMGUI)
   set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES}
                            imgui-sfml/2.1@bincrafters/stable)
@@ -55,11 +55,11 @@ if(CPP_STARTER_USE_IMGUI)
   # libalsa:disable_python=True)
 endif()
 
-if(CPP_STARTER_USE_SDL)
-  set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES}
-                           sdl2/2.0.10@bincrafters/stable)
-  # set(CONAN_EXTRA_OPTIONS ${CONAN_EXTRA_OPTIONS} sdl2:wayland=True)
-endif()
+# if(CPP_STARTER_USE_SDL)
+#   set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES}
+#                            sdl2/2.0.10@bincrafters/stable)
+#   # set(CONAN_EXTRA_OPTIONS ${CONAN_EXTRA_OPTIONS} sdl2:wayland=True)
+# endif()
 
 
 include(cmake/Conan.cmake)
