@@ -1,6 +1,9 @@
 # img-print
 Print images to 24 bit termials as text(wip)
-
+ 
+![image created](sample_ouput.png?raw=true "") 
+ 
+sample output
 # Dependencies
 - c++17 compiler
 - CMake > 3.15
