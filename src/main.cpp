@@ -21,7 +21,8 @@ int main(int argc, char **argv)
     size_t width = 80;
     size_t height = 40;
     std::string filename;
-    set_var(map, width, height, filename);
+    set_args(map, width, height, filename);
+
     Magick::Image image;
     try
     {

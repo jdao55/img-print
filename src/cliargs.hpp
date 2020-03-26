@@ -6,23 +6,13 @@ const char USAGE[] =
     R"(Img Print.
     Usage:
       img-print -o <filename>
-      img-print -d <char width> <char height> -o <filename> [<text ratio h:w>]
+      img-print -d <output-width> <output-height> -o <filename>
       img-print (-h | --help)
 
     Options:
-      -h --help     Show this screen.)";
+      -h --help          Show this screen.
+      -g --greyscale    Output in greyscale)";
 
-inline void help()
-{
-    fmt::print(R"(Img Print.
-    Usage:
-      img-print <char width> <char height> <filename> [<text ratio h:w>]
-      img-print (-h | --help)
-
-    Options:
-      -h --help     Show this screen.)");
-
-}
 
 inline auto get_args_map(int argc, char **argv)
 {
@@ -37,7 +27,7 @@ inline auto get_args_map(int argc, char **argv)
     return args;
 }
 
-void set_var(std::map<std::string, docopt::value>& arg_map, size_t & width, size_t &height, std::string & file_name)
+void set_args(std::map<std::string, docopt::value>& arg_map, size_t & width, size_t &height, std::string & file_name)
 {
     if(arg_map["-o"])
     {
@@ -46,7 +36,7 @@ void set_var(std::map<std::string, docopt::value>& arg_map, size_t & width, size
     }
     if(arg_map["-d"])
     {
-        width = std::stoul(arg_map["<char width>"].asString());
-        height = std::stoul(arg_map["<char height>"].asString());
+        width = std::stoul(arg_map["<output-width>"].asString());
+        height = std::stoul(arg_map["<output-height>"].asString());
     }
 }
