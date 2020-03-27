@@ -8,14 +8,18 @@
 #include <iostream>
 
 #include "cliargs.hpp"
+#include "img_print.hpp"
 
-void print_char_24(uint32_t r, uint32_t g, uint32_t b) { fmt::print("\x1b[38;2;{};{};{}m#", r, g, b); }
+//void print_char_24(uint32_t r, uint32_t g, uint32_t b) { fmt::print("\x1b[38;2;{};{};{}m#", r, g, b); }
 
 
 int main(int argc, char **argv)
 {
-    auto map = get_args_map(argc, argv);
 
+    Magick::InitializeMagick(*argv);
+    auto args = get_args(argc, argv);
+    image_print(args);
+    /*
     Magick::InitializeMagick(*argv);
 
     size_t width = 80;
@@ -61,4 +65,5 @@ int main(int argc, char **argv)
         return 1;
     }
     return 0;
+    */
 }
