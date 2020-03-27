@@ -38,11 +38,7 @@ inline Arguments get_args(int argc, char **argv)
 {
     Arguments args;
     auto args_map = get_args_map(argc, argv);
-     for(auto const& arg : args_map) {
-        std::cout << arg.first <<  arg.second << std::endl;
-    }
-
-     if(args_map["-o"].asBool())
+    if(args_map["-o"].asBool())
     {
         args.filename = args_map["<filename>"].asString();
 
