@@ -19,10 +19,6 @@ set_project_warnings(project_warnings)
 include(cmake/Sanitizers.cmake)
 enable_sanitizers(project_options)
 
-# enable doxygen
-include(cmake/Doxygen.cmake)
-enable_doxygen()
-
 # allow for static analysis options
 include(cmake/StaticAnalyzers.cmake)
 
@@ -66,9 +62,7 @@ include(cmake/Conan.cmake)
 run_conan()
 
 # if(ENABLE_TESTING)
-#   #adding google test
 #   add_subdirectory(googletest)
-#   enable_testing()
 #   message(
 #     "Building Tests. Be sure to check out test/constexpr_tests for constexpr testing"
 #   )
