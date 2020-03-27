@@ -1,8 +1,8 @@
 #include "img_print.hpp"
-#include <bits/stdint-uintn.h>
 
 
-void print_char_rgb(std::array<uint8_t,4> pixel, char c)
+
+void print_char_rgb(std::array<uint8_t,4> pixel, std::string_view c)
 {
     if(pixel[3]> 30)
         fmt::print("\x1b[38;2;{};{};{}m{}", pixel[0], pixel[1], pixel[2], c);
@@ -57,7 +57,7 @@ void image_print(const Arguments &args)
             for (size_t column = 0; column < args.width; ++column)
             {
                 auto pixel = get_pixel_ga(pixels);
-                print_char_rgb(pixel, '#');
+                print_char_rgb(pixel, "\u2587");
             }
             fmt::print("\n");
         }
@@ -68,7 +68,7 @@ void image_print(const Arguments &args)
             for (size_t column = 0; column < args.width; ++column)
             {
                 auto pixel = get_pixel_rgba(pixels);
-                print_char_rgb(pixel, '#');
+                print_char_rgb(pixel, "\u2587");
             }
             fmt::print("\n");
         }

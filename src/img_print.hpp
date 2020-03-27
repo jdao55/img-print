@@ -11,12 +11,13 @@
 #include <cstdint>
 #include <map>
 #include <array>
+#include <string_view>
 #include <docopt/docopt.h>
 #include <iostream>
 
 #include "cliargs.hpp"
 
-void print_char_rgb(std::array<uint8_t,4> pixel, char c);
+void print_char_rgb(std::array<uint8_t,4> pixel, const std::string_view c);
 
 std::array<uint8_t, 4> get_pixel_rgba(const Magick::Quantum *&pixels);
 std::array<uint8_t, 4> get_pixel_ga(const Magick::Quantum *&pixels);
