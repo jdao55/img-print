@@ -7,6 +7,7 @@
 
 struct Arguments{
     std::string filename;
+    std::string output_char = "\u2587";
     size_t width = 50;
     size_t height = 25;
     bool greyscale = false;
@@ -15,13 +16,14 @@ struct Arguments{
 const char USAGE[] =
     R"(Img Print.
     Usage:
-      img-print -o [-g] <filename>
-      img-print -d [-g] <output-width> <output-height> -o <filename>
+      img-print [-g] <filename>
+      img-print [-g] <filename> <output-width> <output-height>
+      img-print [-g] <filename> <output-width> <output-height> <output-character>
       img-print (-h | --help)
 
     Options:
       -h --help          Show this screen.
-      -g --greyscale    Output in greyscale)";
+      -g --greyscale     Output in greyscale)";
 
 
 inline auto get_args_map(int argc, char **argv)
