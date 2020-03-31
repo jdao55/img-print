@@ -40,14 +40,14 @@ inline Arguments get_args(int argc, char **argv)
 {
     Arguments args;
     auto args_map = get_args_map(argc, argv);
-    if (args_map["<filename>"]()) { args.filename = args_map["<filename>"].asString(); }
-    if (args_map["<output-width>"]() && args_map["<output-height>"])
+    if (args_map["<filename>"]) { args.filename = args_map["<filename>"].asString(); }
+    if (args_map["<output-width>"] && args_map["<output-height>"])
     {
         args.width = std::stoul(args_map["<output-width>"].asString());
         args.height = std::stoul(args_map["<output-height>"].asString());
     }
-    if (args_map["--greyscale"].asBool()) args.greyscale = true;
-    if (args_map["<output-character>"]) { args.output_char = args_map["<output-character>"].asString() }
+    args.greyscale =  args_map["--greyscale"].asBool();
+    if (args_map["<output-character>"]) { args.output_char = args_map["<output-character>"].asString(); }
     return args;
 }
 #endif

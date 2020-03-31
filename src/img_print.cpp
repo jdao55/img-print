@@ -57,7 +57,7 @@ void image_print(const Arguments &args)
             for (size_t column = 0; column < args.width; ++column)
             {
                 auto pixel = get_pixel_ga(pixels);
-                print_char_rgb(pixel, "\u2587");
+                print_char_rgb(pixel, args.output_char);
             }
             fmt::print("\n");
         }
@@ -68,7 +68,7 @@ void image_print(const Arguments &args)
             for (size_t column = 0; column < args.width; ++column)
             {
                 auto pixel = get_pixel_rgba(pixels);
-                print_char_rgb(pixel, "\u2587");
+                print_char_rgb(pixel, args.output_char);
             }
             fmt::print("\n");
         }
