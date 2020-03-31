@@ -25,8 +25,8 @@ make -j4
 ```
 # Usage 
 ```
-img-print -o [-g] <filename>
-img-print -d [-g] <output-width> <output-height> -o <filename>
+img-print [-g] <filename>
+img-print [-g] <filename> <output-width> <output-height>
 img-print (-h | --help)
 ```
 
