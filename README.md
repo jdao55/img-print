@@ -23,4 +23,15 @@ cmake ../
 ```
 make -j4
 ```
-# Usage (WIP)
+# Usage 
+```
+img-print -o [-g] <filename>
+img-print -d [-g] <output-width> <output-height> -o <filename>
+img-print (-h | --help)
+```
+
+## Options
+```-h --help```          Print help message 
+ 
+```-g --greyscale```   Output in greyscale
+
