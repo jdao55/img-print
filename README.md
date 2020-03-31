@@ -35,4 +35,6 @@ img-print (-h | --help)
  
 ```-g --greyscale```   Output in greyscale
 # Example
+Tested with Konsole
+ 
 ![image created](example.png?raw=true "") 
