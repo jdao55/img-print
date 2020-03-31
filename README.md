@@ -34,4 +34,5 @@ img-print (-h | --help)
 ```-h --help```          Print help message 
  
 ```-g --greyscale```   Output in greyscale
-
+# Example
+![image created](example.png?raw=true "") 
