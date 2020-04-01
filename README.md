@@ -1,5 +1,5 @@
 # img-print
-Print images to 24 bit termials as text(wip)
+Print images to 24 bit termials as text
  
 ![image created](sample_ouput.png?raw=true "") 
  
@@ -27,6 +27,7 @@ make -j4
 ```
 img-print [-g] <filename>
 img-print [-g] <filename> <output-width> <output-height>
+img-print [-g] <filename> <output-width> <output-height> <output-char>
 img-print (-h | --help)
 ```
 
