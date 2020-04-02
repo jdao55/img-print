@@ -1,5 +1,5 @@
 # img-print
-Print images to 24 bit termials as text(wip)
+Print images to 24 bit termials as text
  
 ![image created](sample_ouput.png?raw=true "") 
  
@@ -23,4 +23,19 @@ cmake ../
 ```
 make -j4
 ```
-# Usage (WIP)
+# Usage 
+```
+img-print [-g] <filename>
+img-print [-g] <filename> <output-width> <output-height>
+img-print [-g] <filename> <output-width> <output-height> <output-char>
+img-print (-h | --help)
+```
+
+## Options
+```-h --help```          Print help message 
+ 
+```-g --greyscale```   Output in greyscale
+# Example
+Tested with Konsole
+ 
+![image created](example.png?raw=true "") 
