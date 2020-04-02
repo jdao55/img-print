@@ -3,6 +3,8 @@
 
 #include <docopt/docopt.h>
 #include <fmt/format.h>
+#include <variant>
+#include <stdexcept>
 
 
 struct Arguments
@@ -36,18 +38,32 @@ inline auto get_args_map(int argc, char **argv)
     return args;
 }
 
-inline Arguments get_args(int argc, char **argv)
+inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
 {
-    Arguments args;
-    auto args_map = get_args_map(argc, argv);
-    if (args_map["<filename>"]) { args.filename = args_map["<filename>"].asString(); }
-    if (args_map["<output-width>"] && args_map["<output-height>"])
+
+    size_t arg_position =1;
+    try
     {
-        args.width = std::stoul(args_map["<output-width>"].asString());
-        args.height = std::stoul(args_map["<output-height>"].asString());
+        Arguments args;
+        auto args_map = get_args_map(argc, argv);
+        if (args_map["<filename>"])
+        {
+            args.filename = args_map["<filename>"].asString();
+            arg_position++;
+        }
+        if (args_map["<output-width>"] && args_map["<output-height>"])
+        {
+            args.width = std::stoul(args_map["<output-width>"].asString());
+            arg_position++;
+            args.height = std::stoul(args_map["<output-height>"].asString());
+            arg_position++;
+        }
+        args.greyscale = args_map["--greyscale"].asBool();
+        if (args_map["<output-character>"]) { args.output_char = args_map["<output-character>"].asString(); }
+        return std::variant<Arguments, std::string>(args);
+    } catch (const std::invalid_argument& e)
+    {
+        return fmt::format("Error: invalid argument \"\x1b[38;2;225;100;40m{}\x1b[0m\"", argv[arg_position]);
     }
-    args.greyscale =  args_map["--greyscale"].asBool();
-    if (args_map["<output-character>"]) { args.output_char = args_map["<output-character>"].asString(); }
-    return args;
 }
 #endif
