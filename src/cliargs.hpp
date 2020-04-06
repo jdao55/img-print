@@ -10,7 +10,7 @@
 struct Arguments
 {
     std::string filename;
-    std::string output_char = "\u2587";
+    std::string output_char = "▇";
     size_t width = 50;
     size_t height = 25;
     bool greyscale = false;
