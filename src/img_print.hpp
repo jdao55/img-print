@@ -17,7 +17,7 @@
 
 #include "cliargs.hpp"
 
-void print_char_rgb(std::array<uint8_t,4> pixel, const std::string_view c);
+std::string format_char_rgb(std::array<uint8_t, 4> pixel, const std::string_view c);
 
 std::array<uint8_t, 4> get_pixel_rgba(const Magick::Quantum *&pixels);
 std::array<uint8_t, 4> get_pixel_ga(const Magick::Quantum *&pixels);

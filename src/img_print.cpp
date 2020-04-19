@@ -2,22 +2,21 @@
 
 
 
-void print_char_rgb(std::array<uint8_t,4> pixel, std::string_view c)
+std::string format_char_rgb(std::array<uint8_t,4> pixel, std::string_view c)
 {
     if(pixel[3]> 30)
-        fmt::print("\x1b[38;2;{};{};{}m{}", pixel[0], pixel[1], pixel[2], c);
+        return  fmt::format("\x1b[38;2;{};{};{}m{}", pixel[0], pixel[1], pixel[2], c);
     else
-        fmt::print(" ");
+        return  " ";
 }
 
 
 std::array<uint8_t, 4> get_pixel_rgba(const Magick::Quantum *&pixels)
 {
-    const uint32_t max_color_val = 255;
-    uint8_t red = uint8_t(std::min(static_cast<uint32_t>(*pixels++ / QuantumRange * 255),   max_color_val));
-    uint8_t green =uint8_t(std::min(static_cast<uint32_t>(*pixels++ / QuantumRange * 255),   max_color_val));
-    uint8_t blue = uint8_t(std::min(static_cast<uint32_t>(*pixels++ / QuantumRange * 255),   max_color_val));
-    uint8_t opacity = uint8_t(std::min(static_cast<uint32_t>(*pixels++ / QuantumRange * 255),   max_color_val));
+    uint8_t red = uint8_t(static_cast<uint32_t>(*pixels++ / QuantumRange * 255));
+    uint8_t green = uint8_t(static_cast<uint32_t>(*pixels++ / QuantumRange * 255));
+    uint8_t blue = uint8_t(static_cast<uint32_t>(*pixels++ / QuantumRange * 255));
+    uint8_t opacity = uint8_t(static_cast<uint32_t>(*pixels++ / QuantumRange * 255));
     return std::array<uint8_t, 4>{red, green, blue, opacity};
 }
 
@@ -57,7 +56,7 @@ void image_print(const Arguments &args)
             for (size_t column = 0; column < args.width; ++column)
             {
                 auto pixel = get_pixel_ga(pixels);
-                print_char_rgb(pixel, args.output_char);
+                fmt::print(format_char_rgb(pixel, args.output_char));
             }
             fmt::print("\n");
         }
@@ -68,7 +67,7 @@ void image_print(const Arguments &args)
             for (size_t column = 0; column < args.width; ++column)
             {
                 auto pixel = get_pixel_rgba(pixels);
-                print_char_rgb(pixel, args.output_char);
+                fmt::print(format_char_rgb(pixel, args.output_char));
             }
             fmt::print("\n");
         }
