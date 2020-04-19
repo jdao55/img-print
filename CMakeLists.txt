@@ -22,8 +22,8 @@ enable_sanitizers(project_options)
 # allow for static analysis options
 include(cmake/StaticAnalyzers.cmake)
 
-option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
-option(ENABLE_TESTING "Enable Test Builds" OFF)
+option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" ON)
+option(ENABLE_TESTING "Enable Test Builds" ON)
 
 # Very basic PCH example
 option(ENABLE_PCH "Enable Precompiled Headers" OFF)
@@ -46,20 +46,19 @@ set(CONAN_EXTRA_REQUIRES  ${CONAN_EXTRA_REQUIRES}  imagemagick/7.0.8-44@bincraft
 include(cmake/Conan.cmake)
 run_conan()
 
-# if(ENABLE_TESTING)
-#   add_subdirectory(googletest)
-#   message(
-#     "Building Tests. Be sure to check out test/constexpr_tests for constexpr testing"
-#   )
-#   add_subdirectory(src/test)
-# endif()
-
-if(ENABLE_FUZZING)
+if(ENABLE_TESTING)
   message(
-    "Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html"
+    "Building Tests. Be sure to check out test/constexpr_tests for constexpr testing"
   )
-  add_subdirectory(fuzz_test)
+  add_subdirectory(src/test)
 endif()
+
+# if(ENABLE_FUZZING)
+#   message(
+#     "Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html"
+#   )
+#   add_subdirectory(fuzz_test)
+# endif()
 
 
 add_subdirectory(src)
