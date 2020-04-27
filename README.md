@@ -39,3 +39,5 @@ img-print (-h | --help)
 Tested with Konsole
  
 ![image created](example.png?raw=true "") 
+
+Runing Tests(TODO make unit tests)
