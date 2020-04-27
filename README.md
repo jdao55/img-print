@@ -7,7 +7,7 @@ sample output
 # Dependencies
 - c++17 compiler
 - CMake > 3.15
-- Conan
+- Conan [install instructions](https://docs.conan.io/en/latest/installation.html)
 
 # Building
 1. clone repository 
@@ -39,3 +39,5 @@ img-print (-h | --help)
 Tested with Konsole
  
 ![image created](example.png?raw=true "") 
+
+Runing Tests(TODO make unit tests)
