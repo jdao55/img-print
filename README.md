@@ -23,6 +23,10 @@ cmake ../
 ```
 make -j4
 ```
+Executable is found in 
+```
+build/bin/img-png
+```
 # Usage 
 ```
 img-print [-g] <filename>
@@ -40,4 +44,8 @@ Tested with Konsole
  
 ![image created](example.png?raw=true "") 
 
-Runing Tests(TODO make unit tests)
+# Running Tests
+test Executable is found in 
+```
+build/bin/unittest
+```
