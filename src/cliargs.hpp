@@ -53,7 +53,7 @@ inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
             args.filename = args_map["<filename>"].asString();
             arg_position++;
         }
-        if (args_map["<output-width>"] && args_map["<output-height>"])
+        if (args_map["<output-width>"])
         {
             args.width = std::stoul(args_map["<output-width>"].asString());
             arg_position++;

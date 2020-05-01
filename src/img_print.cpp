@@ -33,7 +33,7 @@ void transform_image(Magick::Image &image, const size_t x, std::optional<size_t>
 
     {
         auto img_dim = image.size();
-        float ratio = static_cast<float>(img_dim.height()) / static_cast<float>(img_dim.width()) / 2.0f;
+        float ratio = static_cast<float>(img_dim.height()) / static_cast<float>(img_dim.width()) / 2.1f;
         y.emplace(static_cast<size_t>(static_cast<float>(x) * ratio));
     }
     Magick::Geometry scale(x, y.value());
@@ -61,7 +61,7 @@ void image_print(const Arguments &args)
     {
         for (size_t row = 0; row < height; ++row)
         {
-            for (size_t column = 0; column < width; ++column, pixels += 4)
+            for (size_t column = 0; column < width; ++column, pixels+=2)
             {
                 auto pixel = get_pixel_ga(pixels);
                 fmt::print(format_char_rgb(pixel, args.output_char));
@@ -73,7 +73,7 @@ void image_print(const Arguments &args)
     {
         for (size_t row = 0; row < height; ++row)
         {
-            for (size_t column = 0; column < width; ++column, pixels += 4)
+            for (size_t column = 0; column < width; ++column, pixels+=4)
             {
                 auto pixel = get_pixel_rgba(pixels);
                 fmt::print(format_char_rgb(pixel, args.output_char));
