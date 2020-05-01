@@ -11,7 +11,7 @@ std::string format_char_rgb(std::array<uint8_t,4> pixel, std::string_view c)
 }
 
 
-std::array<uint8_t, 4> get_pixel_rgba(const Magick::Quantum *&pixels)
+std::array<uint8_t, 4> get_pixel_rgba(const Magick::Quantum *pixels)
 {
     uint8_t red = uint8_t(static_cast<uint32_t>(*pixels++ / QuantumRange * 255));
     uint8_t green = uint8_t(static_cast<uint32_t>(*pixels++ / QuantumRange * 255));
@@ -20,7 +20,7 @@ std::array<uint8_t, 4> get_pixel_rgba(const Magick::Quantum *&pixels)
     return std::array<uint8_t, 4>{red, green, blue, opacity};
 }
 
-std::array<uint8_t, 4> get_pixel_ga(const Magick::Quantum *&pixels)
+std::array<uint8_t, 4> get_pixel_ga(const Magick::Quantum *pixels)
 {
     const uint32_t max_color_val = 255;
     uint8_t i = uint8_t(std::min(static_cast<uint32_t>(*pixels++ / QuantumRange * 255),   max_color_val));
