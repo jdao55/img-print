@@ -5,14 +5,15 @@
 #include <fmt/format.h>
 #include <variant>
 #include <stdexcept>
+#include <optional>
 
-
+const size_t DEFAULT_WIDTH = 60;
 struct Arguments
 {
     std::string filename;
     std::string output_char = "▇";
-    size_t width = 50;
-    size_t height = 25;
+    size_t width = DEFAULT_WIDTH;
+    std::optional<size_t> height = std::nullopt;
     bool greyscale = false;
 };
 
@@ -20,6 +21,7 @@ const char USAGE[] =
     R"(Img Print.
     Usage:
       img-print [-g] <filename>
+      img-print [-g] <filename> <output-width>
       img-print [-g] <filename> <output-width> <output-height>
       img-print [-g] <filename> <output-width> <output-height> <output-character>
       img-print (-h | --help)
@@ -55,7 +57,11 @@ inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
         {
             args.width = std::stoul(args_map["<output-width>"].asString());
             arg_position++;
-            args.height = std::stoul(args_map["<output-height>"].asString());
+        }
+
+        if (args_map["<output-height>"])
+        {
+            args.height.emplace(std::stoul(args_map["<output-height>"].asString()));
             arg_position++;
         }
         args.greyscale = args_map["--greyscale"].asBool();
