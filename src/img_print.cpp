@@ -1,48 +1,52 @@
 #include "img_print.hpp"
 
+constexpr auto OUTPUT_COLOR_DEPTH = 255;
 
-std::string format_char_rgb(std::array<uint8_t, 4> pixel, std::string_view c)
+std::string format_char_rgb(std::array<uint8_t, 4> pixel, std::string_view c, const uint8_t opacity_cutoff)
 {
-    if (pixel[3] > 30)
+    if (pixel[3] > opacity_cutoff)
+    {
         return fmt::format("\x1b[38;2;{};{};{}m{}", pixel[0], pixel[1], pixel[2], c);
-    else
-        return " ";
+    }
+    return " ";
 }
 
 
 std::array<uint8_t, 4> get_pixel_rgba(const Magick::Quantum *pixels)
 {
-    uint8_t red = uint8_t(static_cast<uint32_t>(*pixels++ / QuantumRange * 255));
-    uint8_t green = uint8_t(static_cast<uint32_t>(*pixels++ / QuantumRange * 255));
-    uint8_t blue = uint8_t(static_cast<uint32_t>(*pixels++ / QuantumRange * 255));
-    uint8_t opacity = uint8_t(static_cast<uint32_t>(*pixels++ / QuantumRange * 255));
+    auto red = uint8_t(pixels[0] / QuantumRange * OUTPUT_COLOR_DEPTH);
+    auto green = uint8_t(pixels[1] / QuantumRange * OUTPUT_COLOR_DEPTH);
+    auto blue = uint8_t(pixels[2] / QuantumRange * OUTPUT_COLOR_DEPTH);
+    auto opacity = uint8_t(pixels[3] / QuantumRange * OUTPUT_COLOR_DEPTH);
     return std::array<uint8_t, 4>{ red, green, blue, opacity };
 }
 
 std::array<uint8_t, 4> get_pixel_ga(const Magick::Quantum *pixels)
 {
-    const uint32_t max_color_val = 255;
-    uint8_t i = uint8_t(std::min(static_cast<uint32_t>(*pixels++ / QuantumRange * 255), max_color_val));
-    uint8_t opacity = uint8_t(std::min(static_cast<uint32_t>(*pixels++ / QuantumRange * 255), max_color_val));
+    auto i = uint8_t(pixels[0] / QuantumRange * OUTPUT_COLOR_DEPTH);
+    auto opacity = uint8_t(pixels[1] / QuantumRange * OUTPUT_COLOR_DEPTH);
     return std::array<uint8_t, 4>{ i, i, i, opacity };
 }
 
-void transform_image(Magick::Image &image, const size_t x, std::optional<size_t> y, const bool grayscale)
+void transform_image(Magick::Image &image, const size_t x, std::optional<size_t> y, const bool grayscale, const float text_ratio)
 {
     if (!y.has_value())
-
     {
         auto img_dim = image.size();
-        float ratio = static_cast<float>(img_dim.height()) / static_cast<float>(img_dim.width()) / 2.1f;
+        float ratio = static_cast<float>(img_dim.height()) / static_cast<float>(img_dim.width()) / text_ratio;
         y.emplace(static_cast<size_t>(static_cast<float>(x) * ratio));
     }
     Magick::Geometry scale(x, y.value());
     scale.aspect(true);
     image.scale(scale);
     if (grayscale)
+    {
         image.type(MagickCore::GrayscaleAlphaType);
+    }
     else
+    {
         image.type(MagickCore::TrueColorAlphaType);
+    }
 }
 void image_print(const Arguments &args)
 {
