@@ -18,12 +18,14 @@ struct Arguments
 };
 
 const char USAGE[] =
+    //TODO add filter arge
     R"(Img Print.
     Usage:
-      img-print [-g] <filename>
-      img-print [-g] <filename> <output-width>
-      img-print [-g] <filename> <output-width> <output-height>
-      img-print [-g] <filename> <output-width> <output-height> <output-character>
+      img-print [-g] [-f <filtertype>] <filename>
+      img-print [-g] [-f <filtertype>] <filename> <output-width>
+      img-print [-g] [-f <filtertype>] <filename> <output-width> <output-height>
+      img-print [-g] [-f <filtertype>] <filename> <output-width> <output-height> <output-character>
+      img-print [-g] [-f <filtertype>]
       img-print (-h | --help)
 
     Options:
