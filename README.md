@@ -29,10 +29,22 @@ build/bin/img-png
 ```
 # Usage 
 ```
-img-print [-g] <filename>
-img-print [-g] <filename> <output-width> <output-height>
-img-print [-g] <filename> <output-width> <output-height> <output-char>
-img-print (-h | --help)
+Usage:
+  img-print [-g] <filename> [--filtertype=<algorithm>]
+  img-print [-g] <filename> <output-width> [--filtertype=<algorithm>]
+  img-print [-g] <filename> <output-width> <output-height> [--filtertype=<algorithm>]
+  img-print [-g] <filename> <output-width> <output-height> <output-character> [--filtertype=<algorithm>]
+  img-print (-h | --help)
+Options:
+   -h --help          Show this screen.
+   -g --greyscale     Output in greyscale
+   --filtertype       Specify scaling algorithm options are:
+                        lanczos
+                        cubic
+                        quadratic
+                        catrom
+                        sinc
+                   
 ```
 
 ## Options
