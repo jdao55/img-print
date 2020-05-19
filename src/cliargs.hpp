@@ -30,19 +30,19 @@ struct Arguments
 };
 
 const char USAGE[] =
-    //TODO add filter arge
+    // TODO add filter arge
     R"(Img Print.
     Usage:
-      img-print [-g] [-f <filtertype>] <filename>
-      img-print [-g] [-f <filtertype>] <filename> <output-width>
-      img-print [-g] [-f <filtertype>] <filename> <output-width> <output-height>
-      img-print [-g] [-f <filtertype>] <filename> <output-width> <output-height> <output-character>
-      img-print [-g] [-f <filtertype>]
+      img-print [-g] <filename> [--filtertype=<algorithm>]
+      img-print [-g] <filename> <output-width> [--filtertype=<algorithm>]
+      img-print [-g] <filename> <output-width> <output-height> [--filtertype=<algorithm>]
+      img-print [-g] <filename> <output-width> <output-height> <output-character> [--filtertype=<algorithm>]
       img-print (-h | --help)
 
     Options:
       -h --help          Show this screen.
-      -g --greyscale     Output in greyscale)";
+      -g --greyscale     Output in greyscale
+      --filtertype       Specify scaling algorithm option)";
 
 
 inline auto get_args_map(int argc, char **argv)
@@ -63,9 +63,9 @@ inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
         Arguments args;
         auto args_map = get_args_map(argc, argv);
 
-        if (args_map["<filtertype>"])
+        if (args_map["--filtertype"])
         {
-            auto type_str = args_map["<filtertype>"].asString();
+            auto type_str = args_map["--filtertype"].asString();
             if (filter_map.find(type_str) != filter_map.end())
             {
                 args.filter_type = filter_map.at(type_str);
