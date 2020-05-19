@@ -11,13 +11,13 @@
 #include <unordered_map>
 
 const size_t DEFAULT_WIDTH = 60;
-const unordered_map<std::string, Magick::FilterType> filter_map {
+const std::unordered_map<std::string, Magick::FilterType> filter_map = {
     {"lanczos", Magick::LanczosFilter},
     {"cubic", Magick::CubicFilter},
     {"quadratic", Magick::QuadraticFilter},
     {"catrom", Magick::CatromFilter},
     {"sinc", Magick::SincFilter}
-}
+};
 
 struct Arguments
 {
@@ -62,6 +62,21 @@ inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
     {
         Arguments args;
         auto args_map = get_args_map(argc, argv);
+
+        if (args_map["<filtertype>"])
+        {
+            auto type_str = args_map["<filtertype>"].asString();
+            if (filter_map.find(type_str) != filter_map.end())
+            {
+                args.filter_type = filter_map.at(type_str);
+            }
+            else
+            {
+                fmt::print("{} is not a filtertype defaulted to lanczos\n", type_str);
+            }
+            arg_position++;
+        }
+
         if (args_map["<filename>"])
         {
             args.filename = args_map["<filename>"].asString();
@@ -79,9 +94,15 @@ inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
             arg_position++;
         }
         args.greyscale = args_map["--greyscale"].asBool();
-        if (args_map["<output-character>"]) { args.output_char = args_map["<output-character>"].asString(); }
+        if (args_map["<output-character>"])
+        {
+            args.output_char = args_map["<output-character>"].asString();
+
+        }
+
         return std::variant<Arguments, std::string>(args);
-    } catch (const std::invalid_argument& e)
+    }
+    catch (const std::invalid_argument& e)
     {
         return fmt::format("Error: invalid argument \"\x1b[38;2;225;100;40m{}\x1b[0m\"", argv[arg_position]);
     }
