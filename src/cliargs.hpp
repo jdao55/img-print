@@ -6,8 +6,19 @@
 #include <variant>
 #include <stdexcept>
 #include <optional>
+#include <Magick++.h>
+#include <MagickCore/image.h>
+#include <unordered_map>
 
 const size_t DEFAULT_WIDTH = 60;
+const unordered_map<std::string, Magick::FilterType> filter_map {
+    {"lanczos", Magick::LanczosFilter},
+    {"cubic", Magick::CubicFilter},
+    {"quadratic", Magick::QuadraticFilter},
+    {"catrom", Magick::CatromFilter},
+    {"sinc", Magick::SincFilter}
+}
+
 struct Arguments
 {
     std::string filename;
@@ -15,6 +26,7 @@ struct Arguments
     size_t width = DEFAULT_WIDTH;
     std::optional<size_t> height = std::nullopt;
     bool greyscale = false;
+    Magick::FilterType filter_type = Magick::LanczosFilter;
 };
 
 const char USAGE[] =
