@@ -36,14 +36,14 @@ Usage:
   img-print [-g] <filename> <output-width> <output-height> <output-character> [--filtertype=<algorithm>]
   img-print (-h | --help)
 Options:
-   -h --help          Show this screen.
-   -g --greyscale     Output in greyscale
-   --filtertype       Specify scaling algorithm options are:
-                        lanczos
-                        cubic
-                        quadratic
-                        catrom
-                        sinc
+   -h --help                   Show this screen.
+   -g --greyscale              Output in greyscale
+   --filtertype=<algorithm>    Specify scaling algorithm options are:
+                                  lanczos
+                                  cubic
+                                  quadratic
+                                  catrom
+                                  sinc
                    
 ```
 
