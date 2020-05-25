@@ -38,12 +38,13 @@ Usage:
 Options:
    -h --help                   Show this screen.
    -g --greyscale              Output in greyscale
-   --filtertype=<algorithm>    Specify scaling algorithm options are:
-                                  lanczos
-                                  cubic
-                                  quadratic
-                                  catrom
-                                  sinc
+   --filtertype=<algorithm>    Specify scaling algorithm
+                               options are:
+                                   lanczos
+                                   cubic
+                                   quadratic
+                                   catrom
+                                   sinc
                    
 ```
 
