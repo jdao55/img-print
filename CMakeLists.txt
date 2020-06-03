@@ -43,9 +43,12 @@ set(CONAN_EXTRA_REQUIRES  ${CONAN_EXTRA_REQUIRES}  imagemagick/7.0.8-44@bincraft
 include(cmake/Conan.cmake)
 run_conan()
 
+include(FindPkgConfig)
+pkg_search_module(libvips REQUIRED IMPORTED_TARGET vips-cpp)
+
 if(ENABLE_TESTING)
   message(
-    "Building Tests. Be sure to check out test/constexpr_tests for constexpr testing"
+    "Building Tests"
   )
   add_subdirectory(test)
 endif()
