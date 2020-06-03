@@ -17,7 +17,7 @@ void image_print(const Arguments &args)
     image.read(args.filename);
 
     // resize image
-    transform_image(image, args.width, args.height, args.greyscale);
+    transform_image(image, args);
     Magick::Pixels view(image);
 
     const auto width = image.size().width();
