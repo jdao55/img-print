@@ -1,5 +1,5 @@
 #include "img_print.hpp"
-
+#include <vips/vips8>
 std::string format_char_rgb(std::array<uint8_t, 4> pixel, std::string_view c, const uint8_t opacity_cutoff)
 {
     if (pixel[3] > opacity_cutoff)
@@ -10,42 +10,52 @@ std::string format_char_rgb(std::array<uint8_t, 4> pixel, std::string_view c, co
 }
 
 
+
+
 void image_print(const Arguments &args)
 {
-    Magick::Image image;
-    // Read a file into image object
-    image.read(args.filename);
+    f( VIPS_INIT( argv[0] ) )
+		vips_error_exit( NULL );
 
-    // resize image
-    transform_image(image, args);
-    Magick::Pixels view(image);
-
-    const auto width = image.size().width();
-    const auto height = image.size().height();
-    const Magick::Quantum *pixels = view.getConst(0, 0, width, height);
-    if (args.greyscale)
-    {
-        for (size_t row = 0; row < height; ++row)
-        {
-            for (size_t column = 0; column < width; ++column, pixels+=2)
-            {
-                auto pixel = get_pixel_ga(pixels);
-                fmt::print(format_char_rgb(pixel, args.output_char));
-            }
-            fmt::print("\n");
-        }
-    }
-    else
-    {
-        for (size_t row = 0; row < height; ++row)
-        {
-            for (size_t column = 0; column < width; ++column, pixels+=4)
-            {
-                auto pixel = get_pixel_rgba(pixels);
-                fmt::print(format_char_rgb(pixel, args.output_char));
-            }
-            fmt::print("\n");
-        }
-    }
-    fmt::print("\x1b[0m\n");
+    vips::VImage in = vips::VImage::new_from_file( args.filename, vips::VImage::option()
+		->set( "access", "sequential" ) );
 }
+
+// {
+//     Magick::Image image;
+//     // Read a file into image object
+//     image.read(args.filename);
+
+//     // resize image
+//     transform_image(image, args);
+//     Magick::Pixels view(image);
+
+//     const auto width = image.size().width();
+//     const auto height = image.size().height();
+//     const Magick::Quantum *pixels = view.getConst(0, 0, width, height);
+//     if (args.greyscale)
+//     {
+//         for (size_t row = 0; row < height; ++row)
+//         {
+//             for (size_t column = 0; column < width; ++column, pixels+=2)
+//             {
+//                 auto pixel = get_pixel_ga(pixels);
+//                 fmt::print(format_char_rgb(pixel, args.output_char));
+//             }
+//             fmt::print("\n");
+//         }
+//     }
+//     else
+//     {
+//         for (size_t row = 0; row < height; ++row)
+//         {
+//             for (size_t column = 0; column < width; ++column, pixels+=4)
+//             {
+//                 auto pixel = get_pixel_rgba(pixels);
+//                 fmt::print(format_char_rgb(pixel, args.output_char));
+//             }
+//             fmt::print("\n");
+//         }
+//     }
+//     fmt::print("\x1b[0m\n");
+// }

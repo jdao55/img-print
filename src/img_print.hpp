@@ -2,8 +2,7 @@
 #define IMGPRINT_HPP
 
 #include <fmt/format.h>
-#include <Magick++.h>
-#include <MagickCore/image.h>
+
 #include <algorithm>
 #include <fmt/format.h>
 #include <cstdint>
