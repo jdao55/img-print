@@ -3,57 +3,32 @@
 #include <iostream>
 #include <algorithm>
 
-uint8_t to_uint8_t(const double n)
-{
-    auto n_abs = std::fabs(n);
-    return std::min(uint8_t(255), uint8_t(n_abs));
-}
 
 
-constexpr double get_scale(size_t start_size, size_t target_size)
+constexpr double get_scale(int start_size, int target_size)
 {
     return double(target_size)/ double (start_size);
 }
 
-// std::string format_char_rgba(std::vector<double> pixel, std::string_view c, const uint8_t opacity_cutoff)
-// {
-//     if (pixel[3] > opacity_cutoff)
-//     {
-//         return fmt::format("\x1b[38;2;{};{};{}m{}",
-//                        to_uint8_t(pixel[0]),
-//                        to_uint8_t(pixel[1]),
-//                        to_uint8_t(pixel[2]),
-//                        c);
-//     }
-//     return " ";
-// }
-// std::string format_char_rgb(std::vector<double> pixel, std::string_view c)
-// {
-//     return fmt::format("\x1b[38;2;{};{};{}m{}",
-//                        to_uint8_t(pixel[0]),
-//                        to_uint8_t(pixel[1]),
-//                        to_uint8_t(pixel[2]),
-//                        c);
-// }
 
-std::string format_char_rgba(double* pixel, std::string_view c, const uint8_t opacity_cutoff)
+std::string format_char_rgba(uint8_t* pixel, std::string_view c, const uint8_t opacity_cutoff)
 {
     if (pixel[3] > opacity_cutoff)
     {
         return fmt::format("\x1b[38;2;{};{};{}m{}",
-                       to_uint8_t(pixel[0]),
-                       to_uint8_t(pixel[1]),
-                       to_uint8_t(pixel[2]),
+                       pixel[0],
+                       pixel[1],
+                       pixel[2],
                        c);
     }
     return " ";
 }
-std::string format_char_rgb(double* pixel, std::string_view c)
+std::string format_char_rgb(uint8_t* pixel, std::string_view c)
 {
     return fmt::format("\x1b[38;2;{};{};{}m{}",
-                       to_uint8_t(pixel[0]),
-                       to_uint8_t(pixel[1]),
-                       to_uint8_t(pixel[2]),
+                       pixel[0],
+                       pixel[1],
+                       pixel[2],
                        c);
 }
 
@@ -74,16 +49,12 @@ void image_print(const Arguments &args)
 
     auto w_scale =get_scale(width, args.width);
     VImage out = in.resize(w_scale, VImage::option()
-                           ->set("kernel", "lanczos3")
-                           ->set("vscale", w_scale/2.0));
+                           ->set("kernel", args.filter_type.c_str())
+                           ->set("vscale", w_scale/2.1));
 
-    VipsImage *out_ns;
-    vips_image_decode(out, &out_ns);
-    double * pixel_data;
     size_t n;
-    //auto pixel_data = (double*)(out.data());
-    out.write_to_buffer()
-    auto data_iter = pixel_data;
+    auto pixels = reinterpret_cast<uint8_t *>(out.write_to_memory(&n));
+    uint8_t* data_iter = pixels;
     for(auto y = 0 ; y < out.height(); ++y)
     {
         for(auto x = 0; x <out.width(); ++x)
@@ -100,4 +71,7 @@ void image_print(const Arguments &args)
         }
         fmt::print("\n");
     }
+    fmt::print("\x1b[0m\n");
+    g_free(pixels);
+    vips_shutdown();
 }

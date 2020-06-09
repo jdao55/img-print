@@ -8,16 +8,15 @@
 #include <optional>
 #include <Magick++.h>
 #include <MagickCore/image.h>
-#include <unordered_map>
+#include <unordered_set>
 
 const size_t DEFAULT_WIDTH = 60;
-const std::unordered_map<std::string, Magick::FilterType> filter_map = {
-    {"lanczos", Magick::LanczosFilter},
-    {"cubic", Magick::CubicFilter},
-    {"quadratic", Magick::QuadraticFilter},
-    {"catrom", Magick::CatromFilter},
-    {"sinc", Magick::SincFilter}
-};
+const std::unordered_set<std::string> filter_set = {
+    "lanczos2",
+    "lanczos3",
+    "cubic",
+    "linear",
+    "nearest"};
 
 struct Arguments
 {
@@ -26,7 +25,7 @@ struct Arguments
     size_t width = DEFAULT_WIDTH;
     std::optional<size_t> height = std::nullopt;
     bool greyscale = false;
-    Magick::FilterType filter_type = Magick::LanczosFilter;
+    std::string filter_type = "cubic";
 };
 
 const char USAGE[] =
@@ -65,14 +64,14 @@ inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
 
         if (args_map["--filtertype"])
         {
-            auto type_str = args_map["--filtertype"].asString();
-            if (filter_map.find(type_str) != filter_map.end())
+            auto filter_str = args_map["--filtertype"].asString();
+            if(filter_set.find(filter_str) != filter_set.end())
             {
-                args.filter_type = filter_map.at(type_str);
+                args.filter_type=filter_str;
             }
             else
             {
-                fmt::print("{} is not a filtertype defaulted to lanczos\n", type_str);
+                fmt::print("{} is not a filtertype defaulted to lanczos\n", filter_str);
             }
             arg_position++;
         }
