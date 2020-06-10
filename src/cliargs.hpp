@@ -39,9 +39,14 @@ const char USAGE[] =
       img-print (-h | --help)
 
     Options:
-      -h --help          Show this screen.
-      -g --greyscale     Output in greyscale
-      --filtertype<algorithm>       Specify scaling algorithm option)";
+      -h --help                 Show this screen.
+      -g --greyscale            Output in greyscale
+      --filtertype<algorithm>   Specify scaling algorithm option
+                                  lanczos2
+                                  lanczos3
+                                  cubic
+                                  linear
+                                  nearest)";
 
 
 inline auto get_args_map(int argc, char **argv)
@@ -71,7 +76,7 @@ inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
             }
             else
             {
-                fmt::print("{} is not a filtertype defaulted to lanczos\n", filter_str);
+                fmt::print("{} is not a filtertype defaulted to cubic\n", filter_str);
             }
             arg_position++;
         }
