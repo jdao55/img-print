@@ -9,8 +9,8 @@
 #include "cliargs.hpp"
 #include "img_util.hpp"
 
-std::string format_char_rgba(uint8_t* pixel, std::string_view c, const uint8_t opacity_cutoff = 30);
-std::string format_char_rgb(uint8_t* pixel, std::string_view c);
+std::string format_char_rgba(uint8_t *pixel, std::string_view c, const uint8_t opacity_cutoff = 30);
+std::string format_char_rgb(uint8_t *pixel, std::string_view c);
 void image_print(const Arguments &args);
 
 
