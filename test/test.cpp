@@ -1,6 +1,5 @@
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
-#include <Magick++.h>
 #include "../src/img_print.hpp"
 #include "../src/img_util.hpp"
 #include <array>

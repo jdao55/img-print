@@ -6,8 +6,6 @@
 #include <variant>
 #include <stdexcept>
 #include <optional>
-#include <Magick++.h>
-#include <MagickCore/image.h>
 #include <unordered_set>
 
 const size_t DEFAULT_WIDTH = 60;
