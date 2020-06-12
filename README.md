@@ -7,6 +7,7 @@ sample output
 # Dependencies
 - c++17 compiler
 - CMake > 3.15
+- libvips
 - Conan [install instructions](https://docs.conan.io/en/latest/installation.html)
 
 # Building
