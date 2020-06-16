@@ -29,15 +29,16 @@ const char USAGE[] =
     // TODO add filter arge
     R"(Img Print.
     Usage:
-      img-print [-g] <filename> [--filtertype=<algorithm>]
-      img-print [-g] <filename> <output-width> [--filtertype=<algorithm>]
-      img-print [-g] <filename> <output-width> <output-height> [--filtertype=<algorithm>]
-      img-print [-g] <filename> <output-width> <output-height> <output-character> [--filtertype=<algorithm>]
+      img-print [-g] <filename> [--outputchar=<char>] [--filtertype=<algorithm>]
+      img-print [-g] <filename> <output-width> [--outputchar=<char>]  [--filtertype=<algorithm>]
+      img-print [-g] <filename> <output-width> <output-height> [--outputchar=<char>] [--filtertype=<algorithm>]
+      img-print [-g] <filename> <output-width> <output-height> [--outputchar=<char>] [--filtertype=<algorithm>]
       img-print (-h | --help)
 
     Options:
       -h --help                 Show this screen.
       -g --greyscale            Output in greyscale
+      --outputchar=<char>       Specify output character
       --filtertype<algorithm>   Specify scaling algorithm option
                                   lanczos2
                                   lanczos3
@@ -95,9 +96,10 @@ inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
             arg_position++;
         }
         args.greyscale = args_map["--greyscale"].asBool();
-        if (args_map["<output-character>"])
+
+        if (args_map["--outputchar"])
         {
-            args.output_char = args_map["<output-character>"].asString();
+            args.output_char = args_map["--outputchar"].asString();
         }
 
         return std::variant<Arguments, std::string>(args);
