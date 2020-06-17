@@ -6,10 +6,10 @@
 #include <variant>
 #include <stdexcept>
 #include <optional>
-#include <unordered_set>
+#include "img_util.hpp"
 
 const size_t DEFAULT_WIDTH = 60;
-const std::unordered_set<std::string> filter_set = { "lanczos2",
+const std::array filters = { "lanczos2",
     "lanczos3",
     "cubic",
     "linear",
@@ -26,7 +26,6 @@ struct Arguments
 };
 
 const char USAGE[] =
-    // TODO add filter arge
     R"(Img Print.
     Usage:
       img-print [-g] <filename> [--outputchar=<char>] [--filtertype=<algorithm>]
@@ -56,6 +55,8 @@ inline auto get_args_map(int argc, char **argv)
     return args;
 }
 
+
+
 inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
 {
 
@@ -68,7 +69,7 @@ inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
         if (args_map["--filtertype"])
         {
             auto filter_str = args_map["--filtertype"].asString();
-            if (filter_set.find(filter_str) != filter_set.end())
+            if (contains(filters, filter_str))
             {
                 args.filter_type = filter_str;
             }
