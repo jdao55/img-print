@@ -5,5 +5,5 @@ target_link_libraries(img-print PRIVATE project_options project_warnings CONAN_P
   CONAN_PKG::fmt PkgConfig::VIPSCPP)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
-  target_compile_options(img-print PRIVATE -Ofast)
+  target_compile_options(img-print PRIVATE -Ofast -fconcepts-ts)
 endif ()
