@@ -31,7 +31,7 @@ format_char_rgba(uint8_t *pixel, std::string_view c, const uint8_t opacity_cutof
 format_char_ga(uint8_t *pixel, std::string_view c, const uint8_t opacity_cutoff = 30);
 
 template <typename T>
-bool contains(const auto& array, const T& key)
+constexpr bool contains(const auto& array, const T& key)
 {
     for(const auto& element: array)
     {
