@@ -9,11 +9,7 @@
 #include "img_util.hpp"
 
 const size_t DEFAULT_WIDTH = 60;
-const std::array filters = { "lanczos2",
-    "lanczos3",
-    "cubic",
-    "linear",
-    "nearest" };
+const std::array filters = { "lanczos2", "lanczos3", "cubic", "linear", "nearest" };
 
 struct Arguments
 {
@@ -38,7 +34,7 @@ const char USAGE[] =
       -h --help                 Show this screen.
       -g --greyscale            Output in greyscale
       --outputchar=<char>       Specify output character
-      --filtertype<algorithm>   Specify scaling algorithm option
+      --filtertype=<algorithm>       Specify scaling algorithm option
                                   lanczos2
                                   lanczos3
                                   cubic
@@ -56,11 +52,10 @@ inline auto get_args_map(int argc, char **argv)
 }
 
 
-
 inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
 {
 
-    size_t arg_position = 1;
+    size_t arg_position = 0;
     try
     {
         Arguments args;
@@ -102,7 +97,6 @@ inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
         {
             args.output_char = args_map["--outputchar"].asString();
         }
-
         return std::variant<Arguments, std::string>(args);
     } catch (const std::invalid_argument &e)
     {
