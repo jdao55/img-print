@@ -2,68 +2,61 @@
 #include <vips/vips8>
 #include <optional>
 
-std::string print_rgba(const uint8_t *pixels,
+void print_rgba(const uint8_t *pixels,
     const size_t height,
     const size_t width,
     const std::string_view c)
 {
-    std::string ret;
-    ret.reserve(reserve_size(height, width));
+
     for (size_t y = 0; y < height; ++y)
     {
         for (size_t x = 0; x < width; ++x)
         {
-            fmt::print(format_char_rgba(pixels, c));
+            format_char_rgba(pixels, c);
             pixels += 4;
         }
         fmt::print("\n");
     }
-    ret += "\x1b[0m\n";
-    return ret;
 }
 
-std::string print_rgb(const uint8_t *pixels,
+void print_rgb(const uint8_t *pixels,
     const size_t height,
     const size_t width,
     const std::string_view c)
 {
-    std::string ret;
+
     for (size_t y = 0; y < height; ++y)
     {
         for (size_t x = 0; x < width; ++x)
         {
-            ret += format_char_rgb(pixels, c);
+            format_char_rgb(pixels, c);
             pixels += 3;
         }
-        ret += '\n';
+        fmt::print("\n");
     }
-    ret += "\x1b[0m\n";
-    return ret;
 }
 
 
-std::string print_ga(const uint8_t *pixels,
+void print_ga(const uint8_t *pixels,
     const size_t height,
     const size_t width,
     const std::string_view c)
 {
-    std::string ret;
-    ret.reserve(reserve_size(height, width));
+
     for (size_t y = 0; y < height; ++y)
     {
         for (size_t x = 0; x < width; ++x)
         {
-            fmt::print(format_char_ga(pixels, c));
+            format_char_ga(pixels, c);
             pixels += 4;
         }
         fmt::print("\n");
     }
-    ret += "\x1b[0m\n";
-    return ret;
+
 }
 
 
-std::string print_g(const uint8_t *pixels,
+void print_g(const uint8_t *pixels,
     const size_t height,
     const size_t width,
     const std::string_view c)
@@ -74,13 +67,12 @@ std::string print_g(const uint8_t *pixels,
     {
         for (size_t x = 0; x < width; ++x)
         {
-            fmt::print(format_char_g(pixels, c));
+            format_char_g(pixels, c);
             pixels += 3;
         }
         fmt::print("\n");
     }
-    ret += "\x1b[0m\n";
-    return ret;
+
 }
 
 
@@ -104,27 +96,26 @@ void image_print(const Arguments &args)
 
     size_t n;
     auto pixels = reinterpret_cast<uint8_t *>(out.write_to_memory(&n));
-
     if (args.greyscale)
     {
         if (out.has_alpha())
         {
-            fmt::print(print_ga(pixels, out.height(), out.width(), args.output_char));
+            print_ga(pixels, out.height(), out.width(), args.output_char);
         }
         else
         {
-            fmt::print(print_g(pixels, out.height(), out.width(), args.output_char));
+            print_g(pixels, out.height(), out.width(), args.output_char);
         }
     }
     else
     {
         if (out.has_alpha())
         {
-            fmt::print(print_rgba(pixels, out.height(), out.width(), args.output_char));
+            print_rgba(pixels, out.height(), out.width(), args.output_char);
         }
         else
         {
-            fmt::print(print_rgb(pixels, out.height(), out.width(), args.output_char));
+            print_rgb(pixels, out.height(), out.width(), args.output_char);
         }
     }
     g_free(pixels);

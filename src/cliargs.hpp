@@ -21,7 +21,7 @@ struct Arguments
     std::string filter_type = "cubic";
 };
 
-const char USAGE[] =
+constexpr char USAGE[] =
     R"(Img Print.
     Usage:
       img-print [-g] <filename> [--outputchar=<char>] [--filtertype=<algorithm>]
@@ -63,7 +63,7 @@ inline std::variant<Arguments, std::string> get_args(int argc, char **argv)
 
         if (args_map["--filtertype"])
         {
-            auto filter_str = args_map["--filtertype"].asString();
+            const auto filter_str = args_map["--filtertype"].asString();
             if (contains(filters, filter_str))
             {
                 args.filter_type = filter_str;

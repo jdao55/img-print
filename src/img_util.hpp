@@ -23,15 +23,15 @@ inline double
 }
 
 
-[[nodiscard]] std::string format_char_rgba(const uint8_t *pixel,
+void format_char_rgba(const uint8_t *pixel,
     const std::string_view c,
     const uint8_t opacity_cutoff = 30);
 
-[[nodiscard]] std::string format_char_rgb(const uint8_t *pixel, const std::string_view c);
+void format_char_rgb(const uint8_t *pixel, const std::string_view c);
 
-[[nodiscard]] std::string format_char_g(const uint8_t *pixel, const std::string_view c);
+void format_char_g(const uint8_t *pixel, const std::string_view c);
 
-[[nodiscard]] std::string format_char_ga(const uint8_t *pixel,
+void format_char_ga(const uint8_t *pixel,
     const std::string_view c,
     const uint8_t opacity_cutoff = 30);
 
