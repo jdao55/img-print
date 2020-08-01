@@ -39,8 +39,7 @@ Usage:
 Options:
    -h --help                   Show this screen.
    -g --greyscale              Output in greyscale
-   --filtertype=<algorithm>    Specify scaling algorithm
-                               options are:
+   --filtertype=<algorithm>    Specify scaling algorithm options are:
                                    lanczos
                                    cubic
                                    quadratic
@@ -50,7 +49,7 @@ Options:
 ```
 
 ## Options
-```-h --help```          Print help message 
+```-h --help```        Print help message 
  
 ```-g --greyscale```   Output in greyscale
 # Example
