@@ -8,6 +8,7 @@ before_install:
   - sudo apt install -y python3-pip
   - pip install conan
 script:
-  - mkdir build && cd build
-  - which conan
-  - cmake --build .. 
+  - mkdir build && cd build 
+  - cmake ..
+  - make 
+  
