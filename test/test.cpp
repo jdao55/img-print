@@ -31,49 +31,11 @@ TEST_CASE("get_vscale", "[util]")
     REQUIRE(rel_error(get_vscale(y1, 300, 0.1), 0.1) < epsilon);
     REQUIRE(rel_error(get_vscale(y2, 4000, 0.32), 0.0125) < epsilon);
 }
-TEST_CASE("Test char print", "[]")
-{
 
-    SECTION("rgba")
-    {
-        uint8_t a1[4] = { 255, 255, 255, 255 };
-        uint8_t a2[4] = { 255, 255, 255, 0 };
-        uint8_t a3[4] = { 50, 50, 55, 255 };
-        uint8_t a4[4] = { 25, 255, 55, 0 };
-        REQUIRE_THAT(format_char_rgba(a1, "#"), Catch::Equals("\x1b[38;2;255;255;255m#"));
-        REQUIRE_THAT(format_char_rgba(a2, "#"), Catch::Equals(" "));
-        REQUIRE_THAT(format_char_rgba(a3, "#"), Catch::Equals("\x1b[38;2;50;50;55m#"));
-        REQUIRE_THAT(format_char_rgba(a4, "#"), Catch::Equals(" "));
-    }
-    SECTION("rbg")
-    {
-        uint8_t a1[3] = { 255, 255, 255 };
-        uint8_t a2[3] = { 0, 0, 0 };
-        uint8_t a3[3] = { 128, 128, 128 };
-        uint8_t a4[3] = { 0, 255, 22 };
-        REQUIRE_THAT(format_char_rgb(a1, "#"), Catch::Equals("\x1b[38;2;255;255;255m#"));
-        REQUIRE_THAT(format_char_rgb(a2, "#"), Catch::Equals("\x1b[38;2;0;0;0m#"));
-        REQUIRE_THAT(format_char_rgb(a3, "#"), Catch::Equals("\x1b[38;2;128;128;128m#"));
-        REQUIRE_THAT(format_char_rgb(a4, "#"), Catch::Equals("\x1b[38;2;0;255;22m#"));
-    }
-    SECTION("grey")
-    {
-        uint8_t a1[3] = { 255, 255, 255 };
-        uint8_t a2[3] = { 192, 0, 0 };
-        uint8_t a3[3] = { 128, 128, 60 };
-        REQUIRE_THAT(format_char_g(a1, "#"), Catch::Equals("\x1b[38;2;255;255;255m#"));
-        REQUIRE_THAT(format_char_g(a2, "#"), Catch::Equals("\x1b[38;2;64;64;64m#"));
-        REQUIRE_THAT(format_char_g(a3, "#"), Catch::Equals("\x1b[38;2;105;105;105m#"));
-    }
-    SECTION("grey-hap")
-    {
-        uint8_t a1[4] = { 255, 255, 255, 255 };
-        uint8_t a2[4] = { 192, 0, 0, 255 };
-        uint8_t a3[4] = { 128, 128, 60, 130 };
-        uint8_t a4[4] = { 0, 255, 22, 0 };
-        REQUIRE_THAT(format_char_ga(a1, "#"), Catch::Equals("\x1b[38;2;255;255;255m#"));
-        REQUIRE_THAT(format_char_ga(a2, "#"), Catch::Equals("\x1b[38;2;64;64;64m#"));
-        REQUIRE_THAT(format_char_ga(a3, "#"), Catch::Equals("\x1b[38;2;105;105;105m#"));
-        REQUIRE_THAT(format_char_ga(a4, "#"), Catch::Equals(" "));
-    }
+TEST_CASE("rgb_to_hex", "util")
+{
+    REQUIRE(rgb_to_hex(0x18, 0x21, 0xFF) == 0x1821FF);
+    REQUIRE(rgb_to_hex(0xFF, 0xFF, 0x00) == 0xFFFF00);
+    REQUIRE(rgb_to_hex(0x12, 0x61, 0x3F) == 0x12613f);
+    REQUIRE(rgb_to_hex(0x18, 0x21, 0xFF) == 0x1821FF);
 }

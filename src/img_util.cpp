@@ -3,18 +3,10 @@
 #include <fmt/compile.h>
 #include <fmt/color.h>
 
-constexpr uint32_t to_hex_colour(uint8_t r, uint8_t g, uint8_t b)
-{
-    uint32_t res = 0;
-    res = (res | r) << 8;
-    res = (res | g) << 8;
-    res = (res | b);
-    return res;
-}
 
 constexpr auto fmt_colour(uint8_t r, uint8_t g, uint8_t b)
 {
-    const auto hexcolor = to_hex_colour(r, g, b);
+    const auto hexcolor = rgb_to_hex(r, g, b);
     return fmt::fg(fmt::detail::color_type(hexcolor));
 }
 
