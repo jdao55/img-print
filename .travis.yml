@@ -1,7 +1,11 @@
 dist: focal
-sudo: false
+sudo: true
 language: cpp
 
+before_install:
+  - sudo apt install -y libvips
+  - sudo apt install -y python3-pip
+  - pip install conan
 script:
   - mkdir build && cd build
   - cmake --build .. 
