@@ -3,7 +3,8 @@ sudo: true
 language: cpp
 
 before_install:
-  - sudo apt install -y libvips
+  - sudo apt update -y
+  - sudo apt install -y libvips-dev 
   - sudo apt install -y python3-pip
   - pip install conan
 script:
