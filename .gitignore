@@ -1,0 +1,4 @@
+.clang*
+.ccls*
+compile_commands*
+build*
