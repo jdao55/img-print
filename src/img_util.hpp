@@ -5,6 +5,14 @@
 #include <string>
 #include <optional>
 
+
+constexpr uint32_t rgb_to_hex(uint8_t r, uint8_t g, uint8_t b)
+{
+    uint32_t res = r << 8;
+    res = (res + g) << 8;
+    res = (res + b);
+    return res;
+}
 constexpr double get_wscale(const auto start_size, const auto target_size)
 {
     return double(target_size) / double(start_size);
