@@ -28,7 +28,7 @@ make -j4
 ```
 Executable is found in 
 ```
-build/bin/img-png
+build/bin/img-print
 ```
 # Usage 
 ```
