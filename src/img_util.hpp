@@ -18,8 +18,6 @@ constexpr double get_wscale(const auto start_size, const auto target_size)
     return double(target_size) / double(start_size);
 }
 
-constexpr size_t reserve_size(const size_t h, const size_t w) { return (h + 1) * w * 24 + 7; }
-
 inline double
     get_vscale(const std::optional<size_t> &in, const size_t image_y, const double w_scale)
 {

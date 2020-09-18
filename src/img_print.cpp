@@ -2,6 +2,37 @@
 #include <vips/vips8>
 #include <optional>
 
+
+void print(const uint8_t *pixels,
+    const size_t height,
+    const size_t width,
+    const std::string_view c,
+    bool has_alpha,
+    bool greyscale)
+{
+    if (greyscale)
+    {
+        if (has_alpha)
+        {
+            print_ga(pixels, height, width, c);
+        }
+        else
+        {
+            print_g(pixels, height, width, c);
+        }
+    }
+    else
+    {
+        if (has_alpha)
+        {
+            print_rgba(pixels, height, width, c);
+        }
+        else
+        {
+            print_rgb(pixels, height, width, c);
+        }
+    }
+}
 void print_rgba(const uint8_t *pixels,
     const size_t height,
     const size_t width,
@@ -52,7 +83,6 @@ void print_ga(const uint8_t *pixels,
         }
         fmt::print("\n");
     }
-
 }
 
 
@@ -61,8 +91,6 @@ void print_g(const uint8_t *pixels,
     const size_t width,
     const std::string_view c)
 {
-    std::string ret;
-    ret.reserve(reserve_size(height, width));
     for (size_t y = 0; y < height; ++y)
     {
         for (size_t x = 0; x < width; ++x)
@@ -72,10 +100,13 @@ void print_g(const uint8_t *pixels,
         }
         fmt::print("\n");
     }
-
 }
 
-
+[[nodiscard]] constexpr bool check_buffer_size(auto h, auto w, auto n, bool has_aplha)
+{
+    auto expected = has_aplha ? h * w * 4 : h * w * 3;
+    return expected == n;
+}
 void image_print(const Arguments &args)
 {
     using namespace vips;
@@ -96,28 +127,15 @@ void image_print(const Arguments &args)
 
     size_t n;
     auto pixels = reinterpret_cast<uint8_t *>(out.write_to_memory(&n));
-    if (args.greyscale)
+    if (!check_buffer_size(out.height(), out.width(), n, out.has_alpha()))
     {
-        if (out.has_alpha())
-        {
-            print_ga(pixels, out.height(), out.width(), args.output_char);
-        }
-        else
-        {
-            print_g(pixels, out.height(), out.width(), args.output_char);
-        }
+        fmt::print("error reading image");
     }
     else
     {
-        if (out.has_alpha())
-        {
-            print_rgba(pixels, out.height(), out.width(), args.output_char);
-        }
-        else
-        {
-            print_rgb(pixels, out.height(), out.width(), args.output_char);
-        }
+        print(pixels, out.height(), out.width(), args.output_char, out.has_alpha(), args.greyscale);
     }
+
     g_free(pixels);
     vips_shutdown();
 }
