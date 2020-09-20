@@ -49,6 +49,7 @@ pkg_search_module(VIPSCPP REQUIRED IMPORTED_TARGET vips-cpp)
 
 
 if(ENABLE_TESTING)
+  enable_testing()
   message(
     "Building Tests"
   )
