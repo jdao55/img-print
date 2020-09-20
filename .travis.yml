@@ -20,12 +20,13 @@ jobs:
       compiler: clang
       dist: focal
       env:
-        - SET_CC="CC=clang && CXX=clang++"
+        - SET_CC="CC=clang-10 && CXX=clang++-10"
       addons:
         apt:
           packages:
             - python3-pip
             - libvips-dev
+            - clang-10
 
 before_script:
   - eval "${SET_CC}"
