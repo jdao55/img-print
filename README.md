@@ -1,6 +1,6 @@
 # img-print
 [![Build Status](https://travis-ci.org/jdao55/img-print.svg?branch=libvips-backend)](https://travis-ci.org/jdao55/img-print)   
-Print images to 24 bit termials as text
+Display images (text representation) in 24 bit color terminals
 
  
 ![image created](sample_ouput.png?raw=true "") 
