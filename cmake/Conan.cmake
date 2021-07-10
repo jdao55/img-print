@@ -17,7 +17,7 @@ conan_cmake_run(
   REQUIRES
   ${CONAN_EXTRA_REQUIRES}
   catch2/2.11.0
-  docopt.cpp/0.6.2
+  docopt.cpp/0.6.3
   fmt/7.0.1
   OPTIONS
   ${CONAN_EXTRA_OPTIONS}
