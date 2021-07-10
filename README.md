@@ -1,6 +1,6 @@
 # img-print
 [![Build Status](https://travis-ci.org/jdao55/img-print.svg?branch=libvips-backend)](https://travis-ci.org/jdao55/img-print)   
-Print images to 24 bit termials as text
+Display images (text representation) in 24 bit color terminals
 
  
 ![image created](sample_ouput.png?raw=true "") 
@@ -30,6 +30,19 @@ Executable is found in
 ```
 build/bin/img-print
 ```
+## Docker (linux x86-64 only)
+sample commands for building and runing with docker
+```
+sudo docker build -t img-print ./ 
+```
+```
+sudo docker run --mount type=bind, \
+                        source="$(pwd)", \
+                        target=/img_print/mnt, \
+                        readonly \
+                   img-print ./relative_path_to_image
+```
+
 # Usage 
 ```
 Usage:

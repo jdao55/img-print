@@ -1,78 +1,36 @@
-#include "img_print.hpp"
+#include <img_print.hpp>
 #include <vips/vips8>
 #include <optional>
 
-void print_rgba(const uint8_t *pixels,
+void print(const std::vector<uint8_t> &pixels,
     const size_t height,
     const size_t width,
-    const std::string_view c)
+    const std::string_view c,
+    bool has_alpha,
+    bool greyscale)
 {
-
-    for (size_t y = 0; y < height; ++y)
+    if (greyscale)
     {
-        for (size_t x = 0; x < width; ++x)
+        if (has_alpha)
         {
-            format_char_rgba(pixels, c);
-            pixels += 4;
+            print_g<ColorChannel::rgba>(pixels, height, width, c);
         }
-        fmt::print("\n");
+        else
+        {
+            print_g<ColorChannel::rgb>(pixels, height, width, c);
+        }
     }
-}
-
-void print_rgb(const uint8_t *pixels,
-    const size_t height,
-    const size_t width,
-    const std::string_view c)
-{
-
-    for (size_t y = 0; y < height; ++y)
+    else
     {
-        for (size_t x = 0; x < width; ++x)
+        if (has_alpha)
         {
-            format_char_rgb(pixels, c);
-            pixels += 3;
+            print_rgb<ColorChannel::rgba>(pixels, height, width, c);
         }
-        fmt::print("\n");
-    }
-}
-
-
-void print_ga(const uint8_t *pixels,
-    const size_t height,
-    const size_t width,
-    const std::string_view c)
-{
-
-    for (size_t y = 0; y < height; ++y)
-    {
-        for (size_t x = 0; x < width; ++x)
+        else
         {
-            format_char_ga(pixels, c);
-            pixels += 4;
+            print_rgb<ColorChannel::rgb>(pixels, height, width, c);
         }
-        fmt::print("\n");
     }
-
-}
-
-
-void print_g(const uint8_t *pixels,
-    const size_t height,
-    const size_t width,
-    const std::string_view c)
-{
-    std::string ret;
-    ret.reserve(reserve_size(height, width));
-    for (size_t y = 0; y < height; ++y)
-    {
-        for (size_t x = 0; x < width; ++x)
-        {
-            format_char_g(pixels, c);
-            pixels += 3;
-        }
-        fmt::print("\n");
-    }
-
 }
 
 
@@ -94,30 +52,18 @@ void image_print(const Arguments &args)
     VImage out = in.resize(
         w_scale, VImage::option()->set("kernel", args.filter_type.c_str())->set("vscale", v_scale));
 
-    size_t n;
-    auto pixels = reinterpret_cast<uint8_t *>(out.write_to_memory(&n));
-    if (args.greyscale)
+    size_t n = 0;
+    auto *pixels_ptr = static_cast<uint8_t *>(out.write_to_memory(&n));
+    auto pixels = std::vector<uint8_t>(pixels_ptr, pixels_ptr + n);
+    if (!check_buffer_size(out.height(), out.width(), n, out.has_alpha()))
     {
-        if (out.has_alpha())
-        {
-            print_ga(pixels, out.height(), out.width(), args.output_char);
-        }
-        else
-        {
-            print_g(pixels, out.height(), out.width(), args.output_char);
-        }
+        fmt::print("error reading image");
     }
     else
     {
-        if (out.has_alpha())
-        {
-            print_rgba(pixels, out.height(), out.width(), args.output_char);
-        }
-        else
-        {
-            print_rgb(pixels, out.height(), out.width(), args.output_char);
-        }
+        print(pixels, out.height(), out.width(), args.output_char, out.has_alpha(), args.greyscale);
     }
-    g_free(pixels);
+
+    g_free(pixels_ptr);
     vips_shutdown();
 }

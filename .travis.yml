@@ -1,14 +1,38 @@
-dist: focal
-sudo: true
 language: cpp
 
-before_install:
-  - sudo apt update -y
-  - sudo apt install -y libvips-dev 
-  - sudo apt install -y python3-pip
-  - pip install conan
+install:
+  - python3 -m pip install --upgrade pip setuptools
+  - python3 -m pip install cmake conan
+
+jobs:
+  include:
+    - os: linux
+      compiler: gcc
+      dist: focal
+      env:
+        - SET_CC="CC=gcc && CXX=g++"
+      addons:
+        apt:
+          packages:
+            - python3-pip
+            - libvips-dev
+    - os: linux
+      compiler: clang
+      dist: focal
+      env:
+        - SET_CC="CC=clang-10 && CXX=clang++-10"
+      addons:
+        apt:
+          packages:
+            - python3-pip
+            - libvips-dev
+            - clang-10
+
+before_script:
+  - eval "${SET_CC}"
 script:
   - mkdir build && cd build 
   - cmake ..
-  - make 
+  - make -j2
+  - ctest -j2
   

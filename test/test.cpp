@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
-#include "../src/img_print.hpp"
-#include "../src/img_util.hpp"
+#include <img_print.hpp>
+#include <img_util.hpp>
 #include <array>
 
 using pixel_t = std::array<uint8_t, 4>;

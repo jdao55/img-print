@@ -24,6 +24,7 @@ include(cmake/StaticAnalyzers.cmake)
 
 option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" ON)
 option(ENABLE_TESTING "Enable Test Builds" ON)
+option(ENABLE_FUZZING "Enable Fuzz test Builds" OFF)
 
 # Very basic PCH example
 option(ENABLE_PCH "Enable Precompiled Headers" OFF)
@@ -48,18 +49,21 @@ pkg_search_module(VIPSCPP REQUIRED IMPORTED_TARGET vips-cpp)
 
 
 if(ENABLE_TESTING)
+  enable_testing()
   message(
     "Building Tests"
   )
   add_subdirectory(test)
 endif()
 
-# if(ENABLE_FUZZING)
-#   message(
-#     "Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html"
-#   )
-#   add_subdirectory(fuzz_test)
-# endif()
+
+if(ENABLE_FUZZING)
+  message(
+    "Building fuzz Tests"
+  )
+  add_subdirectory(fuzztest)
+endif()
+
 
 
 add_subdirectory(src)

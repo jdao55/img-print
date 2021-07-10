@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <fmt/format.h>
 
-#include "cliargs.hpp"
-#include "img_print.hpp"
+#include <cliargs.hpp>
+#include <img_print.hpp>
 
 template<class... Ts>
 struct overload : Ts...
